@@ -14,17 +14,29 @@ async function fetchTodos() {
 
 async function addTodo() {
   const input = document.getElementById("todo-input");
-  await fetch(API_URL, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      id: Date.now().toString(),  // unique ID
-      text: input.value
-    }),
-  });
-  input.value = "";
-  fetchTodos();
+  const text = input.value.trim();
+  if (!text) return;  // prevent empty tasks
+
+  try {
+    await fetch(API_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        id: Date.now().toString(),
+        text
+      }),
+    });
+    input.value = "";
+    fetchTodos();
+  } catch (err) {
+    console.error("Failed to add todo:", err);
+  }
 }
 
-fetchTodos();
+// Bind the button’s click event to addTodo()
+document
+  .getElementById("add-button")
+  .addEventListener("click", addTodo);
 
+// Initial load of existing todos
+fetchTodos();
