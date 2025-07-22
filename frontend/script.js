@@ -17,7 +17,10 @@ async function addTodo() {
   await fetch(API_URL, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ text: input.value }),
+    body: JSON.stringify({
+      id: Date.now().toString(),  // unique ID
+      text: input.value
+    }),
   });
   input.value = "";
   fetchTodos();
