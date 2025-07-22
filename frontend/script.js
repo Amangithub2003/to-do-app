@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:3000/todos";
+const API_URL = "http://13.232.190.5:3000/todos";
 
 async function fetchTodos() {
   const res = await fetch(API_URL);
